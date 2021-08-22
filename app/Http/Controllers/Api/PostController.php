@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new PostCollection(Post::all());
+        return new PostCollection(Post::query()
+                ->paginate(20, '*', 'page', $request->input('page') ?? 1));
     }
 
     public function store(Request $request)
