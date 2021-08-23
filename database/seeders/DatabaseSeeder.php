@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,8 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         $users = User::all();
         $users->each(function ($user, $key){
-            Log::info("email:".$user->email." token".$key." ".$user->createToken('auth_token')->plainTextToken);
+            Log::info("email:".$user->email." token".$key."--->  ".$user->createToken('auth_token')->plainTextToken);
         });
+        Post::factory(10)->create();
     }
 }
