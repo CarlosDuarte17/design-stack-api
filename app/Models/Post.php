@@ -26,11 +26,16 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
-    public function getimageFullPathAttribute(): string
+    public function medias()
     {
-        return '/storage/'.$this->image;
+        return $this->hasMany(Media::class);
     }
+
+//    public function getimageFullPathAttribute(): string
+//    {
+//        return '/storage/'.$this->image;
+//    }
 }
