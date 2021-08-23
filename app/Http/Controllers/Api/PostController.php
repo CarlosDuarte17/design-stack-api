@@ -35,16 +35,18 @@ class PostController extends Controller
         $post = $request->user()->posts()->create([
             'title' => $data['title'],
             'description' => $data['description'],
-            'image' => $path
+            'image' => $request->root().'/storage/'.$path
         ]);
 
         if  ($post) {
             $tags = explode(',', $data['tags']);
 
             foreach ($tags as $tag) {
-                $post->tags()->create([
-                    'tag' => $tag,
-                ]);
+                if (trim($tag)) {
+                    $post->tags()->create([
+                        'tag' => $tag,
+                    ]);
+                }
             }
             return response()->json([
                 'post' => $post,
