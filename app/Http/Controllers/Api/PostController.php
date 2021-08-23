@@ -17,10 +17,6 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-//        return response()->json([
-//            'data' => $request->all()
-//        ], 200);
-//        return $request->user();
         $data = $request->validate([
             'title' => ['required'],
             'description' => ['required'],
