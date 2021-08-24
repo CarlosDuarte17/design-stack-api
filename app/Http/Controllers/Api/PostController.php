@@ -7,8 +7,10 @@ use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use function MongoDB\BSON\toJSON;
 
 class PostController extends Controller
 {
@@ -49,10 +51,9 @@ class PostController extends Controller
         }
 
         $tags = explode(',', mb_strtolower($data['tags']));
-
         foreach ($tags as $tag) {
             if (trim($tag)) {
-                if ($tagElement = Tag::all()->firstWhere('tag', trim($tag))) {
+                if ($tagElement = Tag::query()->firstWhere('tag', trim($tag))) {
                     $post->tags()->attach($tagElement);
                 } else {
                     $tagElement = Tag::query()->create([
