@@ -15,7 +15,7 @@ class CreateMediaTable extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id');
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->string('media_path');
             $table->string('media_source');
             $table->timestamps();

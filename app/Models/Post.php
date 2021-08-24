@@ -33,9 +33,4 @@ class Post extends Model
     {
         return $this->hasMany(Media::class);
     }
-
-//    public function getimageFullPathAttribute(): string
-//    {
-//        return '/storage/'.$this->image;
-//    }
 }

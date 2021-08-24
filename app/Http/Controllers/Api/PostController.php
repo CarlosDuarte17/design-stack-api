@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     public function index(Request $request)
     {
-        return new PostCollection(Post::query()->paginate(20));
+        return new PostCollection(Post::query()->latest()->paginate(10));
     }
 
     public function store(Request $request)
@@ -20,19 +22,13 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required'],
             'tags' => ['required'],
-            'file' => ['required', 'file'],
+            'files' => ['required'],
         ]);
-
-        $file = $request->file('file');
-
-        $path = $file->store('images', 'public');
 
         $post = $request->user()->posts()->create([
             'title' => $data['title'],
-            'description' => $data['description'],
-            'image' => $request->root().'/storage/'.$path
+            'description' => $request->input('description') ?? '',
         ]);
-
 
         if (!$post) {
             return response()->json([
@@ -40,13 +36,31 @@ class PostController extends Controller
             ], 500);
         }
 
-        $tags = explode(',', $data['tags']);
+        if($files = $request->file('files'))
+        {
+            foreach ($files as $file)
+            {
+                $path = $file->store('images', 'public');
+                $post->medias()->create([
+                    'media_path' => '/storage/'.$path,
+                    'media_source' => $request->root(),
+                ]);
+            }
+        }
+
+        $tags = explode(',', mb_strtolower($data['tags']));
 
         foreach ($tags as $tag) {
             if (trim($tag)) {
-                $post->tags()->create([
-                    'tag' => $tag,
-                ]);
+                if ($tagElement = Tag::all()->firstWhere('tag', trim($tag))) {
+                    $post->tags()->attach($tagElement);
+                } else {
+                    $tagElement = Tag::query()->create([
+                        'tag' => $tag,
+                        'slug' => Str::slug($tag),
+                    ]);
+                    $post->tags()->attach($tagElement);
+                }
             }
         }
         return response()->json([

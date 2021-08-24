@@ -32,4 +32,9 @@ Route::apiResource('posts', PostController::class)
     ->only(['index', 'store'])
     ->middleware('auth:sanctum');
 
+Route::apiResource('posts', PostController::class)
+    ->only(['index', 'store'])
+    ->middleware('auth:sanctum');
+
+
 Route::post('/login', [LoginController::class, 'login']);

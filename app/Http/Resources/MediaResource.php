@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class MediaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,10 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'user' => new UserResource($this->user),
-            'title' => $this->title,
-            'description' => $this->description,
-            'media' => new MediaCollection($this->medias),
-            'tags' => $this->tags,
+            'post_id' => $this->post_id,
+            'media_path' => $this->media_path,
+            'media_source' => $this->media_source,
+            'mediaFullPath' => $this->mediaFullPath,
         ];
     }
 }
