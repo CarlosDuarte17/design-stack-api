@@ -30,7 +30,7 @@ Route::apiResource('users', UserController::class)
     ->middleware('auth:sanctum');
 
 Route::apiResource('posts', PostController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'show'])
     ->middleware('auth:sanctum');
 
 Route::apiResource('tags', TagController::class)
