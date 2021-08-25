@@ -56,7 +56,8 @@ class DatabaseSeeder extends Seeder
         foreach ($posts as $post) {
             $post->medias()->create([
                 'media_path' => '/id/212/500/500.jpg?hmac=-kY7qwGIXiojkBFGjs-85oVC-LGV9ZemgovUZh1qYR4',
-                'media_source' => 'https://i.picsum.photos'
+                'media_source' => 'https://i.picsum.photos',
+                'type' => 'image',
             ]);
         }
     }

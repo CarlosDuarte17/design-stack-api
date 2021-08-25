@@ -42,10 +42,11 @@ class PostController extends Controller
         {
             foreach ($files as $file)
             {
-                $path = $file->store('images', 'public');
+                $path = $file->store('media', 'public');
                 $post->medias()->create([
                     'media_path' => '/storage/'.$path,
                     'media_source' => $request->root(),
+                    'type' => explode('/', $file->getMimeType())[0],
                 ]);
             }
         }

@@ -18,6 +18,7 @@ class CreateMediaTable extends Migration
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->string('media_path');
             $table->string('media_source');
+            $table->string('type');
             $table->timestamps();
         });
     }

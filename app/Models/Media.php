@@ -13,6 +13,7 @@ class Media extends Model
         'post_id',
         'media_path',
         'media_source',
+        'type',
     ];
 
     public function post()
