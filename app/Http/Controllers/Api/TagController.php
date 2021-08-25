@@ -44,11 +44,17 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @return PostCollection
      */
-    public function show(Tag $tag)
+    public function show(string $slug)
     {
-        return new PostCollection($tag->posts);
+        $tag = Tag::query()->firstWhere('slug', $slug);
+        if (!$tag) {
+            return new PostCollection([]);
+//            return new PostCollection(Tag::query()->first()->posts()->latest()->paginate(2));
+        }
+
+        return new PostCollection($tag->posts()->paginate(10));
     }
 
     /**
