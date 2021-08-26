@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\User;
@@ -37,5 +38,8 @@ Route::apiResource('tags', TagController::class)
     ->only(['show'])
     ->middleware('auth:sanctum');
 
+Route::apiResource('tags.posts', ResourceController::class)
+    ->only(['index'])
+    ->middleware('auth:sanctum');
 
 Route::post('/login', [LoginController::class, 'login']);

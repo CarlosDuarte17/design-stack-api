@@ -4,20 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class ResourceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return PostCollection
      */
-    public function index()
+    public function index(Tag $tag)
     {
-        //
+       if (!$tag) {
+           return new PostCollection([]);
+       }
+       return new PostCollection($tag->posts()->paginate(10));
     }
 
     /**
@@ -45,16 +49,16 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
-     * @return TagResource
+     * @return PostResource
      */
     public function show(string $slug)
     {
         $tag = Tag::query()->firstWhere('slug', $slug);
         if (!$tag) {
-            return new TagResource([]);
+            return new PostResource([]);
         }
 
-        return new TagResource($tag);
+        return new PostResource($tag->posts()->paginate(10));
     }
 
     /**

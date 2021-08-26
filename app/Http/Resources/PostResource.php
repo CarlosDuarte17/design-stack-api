@@ -20,7 +20,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'media' => new MediaCollection($this->medias),
-            'tags' => $this->tags,
+            'tags' => new TagCollection($this->tags),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
