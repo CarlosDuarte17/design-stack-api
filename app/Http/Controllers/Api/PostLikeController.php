@@ -12,7 +12,7 @@ class PostLikeController extends Controller
 {
     public function store(Request $request, Post $post)
     {
-        $like = $post->likes()->toggle($request->user()->id);
+        $post->likes()->toggle($request->user()->id);
 
         return new PostResource($post);
     }

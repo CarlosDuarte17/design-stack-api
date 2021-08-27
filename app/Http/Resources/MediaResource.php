@@ -15,10 +15,10 @@ class MediaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'post_id' => $this->post_id,
-            'path' => $this->media_path,
-            'source' => $this->media_source,
             'FullPath' => $this->FullPath,
+            'path' => $this->media_path,
+            'post_id' => $this->post_id,
+            'source' => $this->media_source,
             'type' => $this->type
         ];
     }

@@ -15,9 +15,9 @@ class TagPostResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'tag' => $this->tag,
-          'slug' => $this->slug,
-          'posts' => new PostCollection($this->posts),
+            'posts' => new PostCollection($this->posts),
+            'slug' => $this->slug,
+            'tag' => $this->tag,
         ];
     }
 }

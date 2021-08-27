@@ -24,7 +24,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'updated_at' => $this->updated_at,
             'user' => new UserResource($this->user),
-            'viewer_liked' => $this->likes()->where('user_id', 10)->exists(),
+            'viewer_liked' => $this->likes()->where('user_id', $request->user()->id)->exists(),
         ];
     }
 }

@@ -27,12 +27,13 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required'],
             'tags' => ['required'],
+            'description' => ['nullable'],
             'files' => ['required'],
         ]);
 
         $post = $request->user()->posts()->create([
             'title' => $data['title'],
-            'description' => $request->input('description') ?? '',
+            'description' => $data['description'],
         ]);
 
         if (!$post) {
@@ -49,7 +50,7 @@ class PostController extends Controller
                 $post->medias()->create([
                     'path' => '/storage/'.$path,
                     'source' => $request->root(),
-                    'type' => explode('/', $file->getMimeType())[0],
+                    'type' => Str::before($file->getMimeType(), '/'),
                 ]);
             }
         }
@@ -62,7 +63,6 @@ class PostController extends Controller
                         'tag' => $trimTag,
                     ],
                     [
-                        'tag' => $trimTag,
                         'slug' => Str::slug($tag),
                     ]
                 );
