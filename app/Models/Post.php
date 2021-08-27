@@ -33,4 +33,9 @@ class Post extends Model
     {
         return $this->hasMany(Media::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
 }

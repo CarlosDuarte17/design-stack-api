@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostLikeController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ResourceController;
@@ -40,6 +41,10 @@ Route::apiResource('tags', TagController::class)
 
 Route::apiResource('tags.posts', ResourceController::class)
     ->only(['index'])
+    ->middleware('auth:sanctum');
+
+Route::apiResource('posts.like', PostLikeController::class)
+    ->only(['store'])
     ->middleware('auth:sanctum');
 
 Route::post('/login', [LoginController::class, 'login']);

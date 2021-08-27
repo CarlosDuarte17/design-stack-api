@@ -51,12 +51,22 @@ class DatabaseSeeder extends Seeder
         }
     }
 
+    function createLikes() {
+        $users = User::all();
+        $posts = Post::all();
+
+        for ($i = 0; $i < 10; $i++) {
+            $post = $posts->random();
+            $post->tags()->attach($users->random());
+        }
+    }
+
     function createMedias() {
         $posts = Post::all();
         foreach ($posts as $post) {
             $post->medias()->create([
-                'media_path' => '/id/212/500/500.jpg?hmac=-kY7qwGIXiojkBFGjs-85oVC-LGV9ZemgovUZh1qYR4',
-                'media_source' => 'https://i.picsum.photos',
+                'path' => '/id/212/500/500.jpg?hmac=-kY7qwGIXiojkBFGjs-85oVC-LGV9ZemgovUZh1qYR4',
+                'source' => 'https://i.picsum.photos',
                 'type' => 'image',
             ]);
         }

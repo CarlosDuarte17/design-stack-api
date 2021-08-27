@@ -21,9 +21,9 @@ class Media extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function getmediaFullPathAttribute(): string
+    public function getFullPathAttribute(): string
     {
-        return $this->media_source.$this->media_path;
+        return $this->source.$this->path;
     }
 
 }

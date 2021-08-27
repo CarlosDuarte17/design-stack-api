@@ -57,19 +57,19 @@ class PostController extends Controller
         $tags = explode(',', mb_strtolower($data['tags']));
         foreach ($tags as $tag) {
             if ($trimTag = trim($tag)) {
-                if ($tagElement = Tag::query()->firstWhere('tag', $trimTag)) {
-                    $post->tags()->attach($tagElement);
-                } else {
-                    $tagElement = Tag::query()->create([
+                $currentTag = Tag::query()->firstOrCreate(
+                    [
+                        'tag' => $trimTag,
+                    ],
+                    [
                         'tag' => $trimTag,
                         'slug' => Str::slug($tag),
-                    ]);
-                    $post->tags()->attach($tagElement);
-                }
+                    ]
+                );
+                $post->tags()->attach($currentTag);
             }
         }
-        return response()->json([
-            'post' => new PostResource($post),
-        ]);
+
+        return new PostResource($post);
     }
 }

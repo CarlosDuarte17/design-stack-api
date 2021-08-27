@@ -15,14 +15,16 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'user' => new UserResource($this->user),
-            'title' => $this->title,
+            'created_at' => $this->created_at,
             'description' => $this->description,
+            'id' => $this->id,
+            'likes' => $this->likes->count(),
             'media' => new MediaCollection($this->medias),
             'tags' => new TagCollection($this->tags),
-            'created_at' => $this->created_at,
+            'title' => $this->title,
             'updated_at' => $this->updated_at,
+            'user' => new UserResource($this->user),
+            'viewer_liked' => $this->likes()->where('user_id', 10)->exists(),
         ];
     }
 }
