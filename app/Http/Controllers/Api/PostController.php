@@ -47,8 +47,8 @@ class PostController extends Controller
             {
                 $path = $file->store('media', 'public');
                 $post->medias()->create([
-                    'media_path' => '/storage/'.$path,
-                    'media_source' => $request->root(),
+                    'path' => '/storage/'.$path,
+                    'source' => $request->root(),
                     'type' => explode('/', $file->getMimeType())[0],
                 ]);
             }
