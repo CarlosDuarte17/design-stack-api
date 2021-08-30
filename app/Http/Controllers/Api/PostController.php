@@ -58,14 +58,7 @@ class PostController extends Controller
         $tags = explode(',', mb_strtolower($data['tags']));
         foreach ($tags as $tag) {
             if ($trimTag = trim($tag)) {
-                $currentTag = Tag::query()->firstOrCreate(
-                    [
-                        'tag' => $trimTag,
-                    ],
-                    [
-                        'slug' => Str::slug($tag),
-                    ]
-                );
+                $currentTag = Tag::query()->firstOrCreate(['tag' => $trimTag], ['slug' => Str::slug($tag)]);
                 $post->tags()->attach($currentTag);
             }
         }
